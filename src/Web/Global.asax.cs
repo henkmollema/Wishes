@@ -18,4 +18,11 @@ namespace Wishes.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
+
+    public static class WishesSettings
+    {
+        public const string AdminUsername = "sint";
+
+        public const string AdminPassword = "sint";
+    }
 }
