@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Database.cs" />
     <Compile Include="Domain\Model\ChimneySize.cs" />
     <Compile Include="Domain\Model\User.cs" />
     <Compile Include="Domain\Model\WishlistItem.cs" />

@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Wishes.Core.Data;
 using Wishes.Web.Models.Account;
 
 namespace Wishes.Web.Controllers
@@ -12,11 +13,16 @@ namespace Wishes.Web.Controllers
         }
 
         [HttpPost]
+        [Route("registreren")]
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
                 // todo: map to domain model and insert in db.
+                using (var con = Database.GetOpenConnection())
+                {
+                    
+                }
 
                 return RedirectToAction("Create", "WishList");
             }
