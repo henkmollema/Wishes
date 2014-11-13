@@ -11,11 +11,12 @@
     <div class="form-group">
         <div class="input-group">
             @Html.LabelFor(m => m.Item.ProductName, new { @class = "sr-only" })
-            @Html.TextBoxFor(m => m.Item.ProductName, new { @class = "form-control", placeholder = "Product" })
+            @Html.TextBoxFor(m => m.Item.ProductName, new { @class = "form-control input-lg", placeholder = "Naam van cadeautje" })
+            <i class="glyphicon glyphicon-gift form-control-feedback"></i>
         </div>
     </div>
     
-    <button type="submit" class="btn btn-primary">Toevoegen</button>
+    <button type="submit" class="btn btn-lg btn-primary">Toevoegen</button>
 }
 
 <hr />
@@ -26,7 +27,12 @@
         <ul class="list-group">
             @foreach (var item in Model.Items)
             {
-                <li class="list-group-item">@item.ProductName</li>
+                <li class="list-group-item">
+                    @item.ProductName
+                    <a href="#" style="padding: 3px 2px;" class="pull-right"><i class="glyphicon glyphicon-remove"></i></a>
+                    <a href="#" style="padding: 3px 2px;" class="pull-right"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <a href="#" style="padding: 3px 2px;" class="pull-right"><i class="glyphicon glyphicon-chevron-up"></i></a>
+                </li>
             }
         </ul>
     </div>
