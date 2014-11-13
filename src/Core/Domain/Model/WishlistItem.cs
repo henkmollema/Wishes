@@ -9,7 +9,5 @@
         public string ProductName { get; set; }
 
         public int SortOrder { get; set; }
-
-        public User User { get; set; }
     }
 }

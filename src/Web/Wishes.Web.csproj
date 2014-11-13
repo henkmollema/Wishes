@@ -118,13 +118,11 @@
     </Compile>
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\RegisterModel.cs" />
+    <Compile Include="Models\WishList\WishListItemModel.cs" />
+    <Compile Include="Models\WishList\WishListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Wishes.mdf" />
-    <Content Include="App_Data\Wishes_log.ldf">
-      <DependentUpon>Wishes.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -170,9 +168,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\WishList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\WishList\" />
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

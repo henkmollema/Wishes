@@ -1,0 +1,33 @@
+﻿@model Wishes.Web.Models.WishList.WishListModel
+
+@{
+    ViewBag.Title = "Verlanglijstje van " + Model.User.Name;
+}
+
+<h2>Verlanglijstje van @Model.User.Name</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-inline", role = "form" }))
+{
+    <div class="form-group">
+        <div class="input-group">
+            @Html.LabelFor(m => m.Item.ProductName, new { @class = "sr-only" })
+            @Html.TextBoxFor(m => m.Item.ProductName, new { @class = "form-control", placeholder = "Product" })
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Toevoegen</button>
+}
+
+<hr />
+
+@if (Model.Items.Any())
+{
+    <div style="max-width: 400px">
+        <ul class="list-group">
+            @foreach (var item in Model.Items)
+            {
+                <li class="list-group-item">@item.ProductName</li>
+            }
+        </ul>
+    </div>
+}
