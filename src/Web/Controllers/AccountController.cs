@@ -1,5 +1,6 @@
 ﻿using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Security;
 using Wishes.Core.Data.Repositories;
 using Wishes.Core.Domain.Model;
 using Wishes.Web.Models.Account;
@@ -34,9 +35,47 @@ namespace Wishes.Web.Controllers
                                                ChimneySize = (int)ChimneySize.Medium
                                            });
 
+                FormsAuthentication.SetAuthCookie(model.Username, true);
+
                 return RedirectToAction("Create", "WishList");
             }
             return View(model);
+        }
+
+        [Route("inloggen")]
+        public ActionResult Login()
+        {
+            return View(new LoginModel());
+        }
+
+        [Route("inloggen")]
+        [HttpPost]
+        public ActionResult Login(LoginModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _userRepository.Get(model.Username);
+                if (user != null)
+                {
+                    if (Crypto.VerifyHashedPassword(user.Password, model.Password))
+                    {
+                        FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
+                        return RedirectToAction("Create", "WishList");
+                    }
+                }
+
+                ModelState.AddModelError("", "Gebruikersnaam of wachtwoord klopt niet.");
+            }
+
+            return View(model);
+        }
+
+        [Authorize]
+        [Route("uitloggen")]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
