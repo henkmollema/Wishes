@@ -37,7 +37,7 @@ namespace Wishes.Web.Controllers
 
                 FormsAuthentication.SetAuthCookie(model.Username, true);
 
-                return RedirectToAction("Create", "WishList");
+                return RedirectToAction("Index", "WishList");
             }
             return View(model);
         }
@@ -60,7 +60,7 @@ namespace Wishes.Web.Controllers
                     if (Crypto.VerifyHashedPassword(user.Password, model.Password))
                     {
                         FormsAuthentication.SetAuthCookie(user.Username, model.RememberMe);
-                        return RedirectToAction("Create", "WishList");
+                        return RedirectToAction("Index", "WishList");
                     }
                 }
 
