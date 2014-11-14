@@ -56,6 +56,12 @@ namespace Wishes.Web.Controllers
             return Json(new { success = true });
         }
 
+        [HttpPost]
+        public JsonResult MoveItem(int id, bool up)
+        {
+            return Json(new { success = true });
+        }
+
         private User CurrentUser
         {
             get

@@ -4,6 +4,16 @@
     ViewBag.Title = "Verlanglijstje van " + Model.User.Name;
 }
 
+<style type="text/css">
+    #wish-list li:first-child .item-up {
+        display: none;
+    }
+
+    #wish-list li:last-child .item-down {
+        display: none;
+    }
+</style>
+
 <h2>Verlanglijstje van @Model.User.Name</h2>
 
 <form role="form" class="form-inline" id="form-add-item">
@@ -37,39 +47,79 @@
 @section scripts
 {
     <script type="text/javascript">
-        $('#form-add-item').submit(function() {
-            $.post(
-                '@Url.Action("AddItem", "WishList")',
-                $(this).serialize(),
-                function(result) {
-                    if (result.success) {
-                        $('#wish-list').append(
-                            '<li class="list-group-item" data-item-id="' + result.id + '">' +
-                            result.item +
-                            '<a href="#" style="padding: 3px 2px;" class="item-remove pull-right"><i class="glyphicon glyphicon-remove"></i></a>' +
-                            '<a href="#" style="padding: 3px 2px;" class="item-down pull-right"><i class="glyphicon glyphicon-chevron-down"></i></a>' +
-                            '<a href="#" style="padding: 3px 2px;" class="item-up pull-right"><i class="glyphicon glyphicon-chevron-up"></i></a>' +
-                            '</li>');
+        $(function() {
+            $('#form-add-item').submit(function () {
+                $.post(
+                    '@Url.Action("AddItem", "WishList")',
+                    $(this).serialize(),
+                    function (result) {
+                        if (result.success) {
+                            $('#wish-list').append(
+                                '<li class="list-group-item" data-item-id="' + result.id + '">' +
+                                result.item +
+                                '<a href="#" style="padding: 3px 2px;" class="item-remove pull-right"><i class="glyphicon glyphicon-remove"></i></a>' +
+                                '<a href="#" style="padding: 3px 2px;" class="item-down pull-right"><i class="glyphicon glyphicon-chevron-down"></i></a>' +
+                                '<a href="#" style="padding: 3px 2px;" class="item-up pull-right"><i class="glyphicon glyphicon-chevron-up"></i></a>' +
+                                '</li>');
+                        }
                     }
-                }
-            );
+                );
 
-            console.log(JSON.stringify($(this).serialize()));
-            return false;
-        });
+                console.log(JSON.stringify($(this).serialize()));
+                return false;
+            });
 
-        $('.item-remove').click(function () {
-            var item = $(this).closest('li');
-            $.post(
-                '@Url.Action("RemoveItem", "WishList")',
-                {
-                    id: item.data('item-id')
-                },
-                function(result) {
-                    if (result.success) {
-                        item.remove();
-                    }
-                });
+            $('#wish-list').on('click', '.item-remove', function () {
+                var item = $(this).closest('li');
+                $.post(
+                    '@Url.Action("RemoveItem", "WishList")',
+                    {
+                        id: item.data('item-id')
+                    },
+                    function (result) {
+                        if (result.success) {
+                            item.remove();
+                        }
+                    });
+            });
+
+            $('#wish-list').on('click', '.item-up', function () {
+                var $this = $(this);
+                var $item = $this.closest('li');
+                $.post(
+                    '@Url.Action("MoveItem", "WishList")',
+                    {
+                        id: $item.data('item-id'),
+                        up: true
+                    },
+                    function (result) {
+                        if (result.success) {
+                            var $prev = $item.prev();
+                            if ($prev != null) {
+                                $item.insertBefore($prev);
+                            }
+                        }
+                    });
+            });
+
+            $('#wish-list').on('click', '.item-down', function () {
+                var $this = $(this);
+                var $item = $this.closest('li');
+                $.post(
+                    '@Url.Action("MoveItem", "WishList")',
+                    {
+                        id: $item.data('item-id'),
+                        up: false
+                    },
+                    function (result) {
+                        if (result.success) {
+                            var $prev = $item.next();
+                            if ($prev != null) {
+                                $item.insertAfter($prev);
+                            }
+                        }
+                    });
+            });
         });
     </script>
 }
