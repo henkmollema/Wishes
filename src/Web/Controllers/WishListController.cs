@@ -52,7 +52,7 @@ namespace Wishes.Web.Controllers
                 return Json(new { success = false });
             }
 
-            _wishListRepository.Remove(item);
+            _wishListRepository.RemoveItem(item);
             return Json(new { success = true });
         }
 

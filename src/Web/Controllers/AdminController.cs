@@ -47,6 +47,14 @@ namespace Wishes.Web.Controllers
             return View(model);
         }
 
+        [Route("admin/verlanglijstjes/{id}")]
+        [HttpPost]
+        public ActionResult WishList(FormCollection form, int id)
+        {
+            _wishListRepository.RemoveList(id);
+            return RedirectToAction("Index");
+        }
+
         [Route("cadeautjes")]
         public ActionResult ProductCount()
         {

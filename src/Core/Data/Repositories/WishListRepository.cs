@@ -54,11 +54,20 @@ order by c desc";
             }
         }
 
-        public void Remove(WishListItem item)
+        public void RemoveItem(WishListItem item)
         {
             using (var con = Database.GetOpenConnection())
             {
                 con.Delete(item);
+            }
+        }
+
+        public void RemoveList(int userId)
+        {
+            using (var con = Database.GetOpenConnection())
+            {
+                string sql = "delete from WishListItems where UserId = @UserId";
+                con.Execute(sql, new { UserId = userId });
             }
         }
     }
