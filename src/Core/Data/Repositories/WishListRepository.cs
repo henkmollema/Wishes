@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Dapper;
 using Dommel;
 using Wishes.Core.Domain.Model;
@@ -20,6 +21,20 @@ namespace Wishes.Core.Data.Repositories
             using (var con = Database.GetOpenConnection())
             {
                 return con.Query<WishListItem>("select * from WishListItems where UserId = @UserId order by SortOrder", new { UserId = userId });
+            }
+        }
+
+        public Dictionary<string, int> GetProductCount()
+        {
+            using (var con = Database.GetOpenConnection())
+            {
+                string sql = @"
+select ProductName, count(*) as c from WishListItems
+group by ProductName
+order by c desc";
+                var res = con.Query<dynamic>(sql);
+                var dict = res.ToDictionary<dynamic, string, int>(item => item.ProductName, item => item.c);
+                return dict;
             }
         }
 

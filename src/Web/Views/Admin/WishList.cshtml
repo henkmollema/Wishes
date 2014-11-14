@@ -6,6 +6,15 @@
 
 <h2>Verlanglijstje van @Model.User.Name</h2>
 
+<div class="panel panel-default">
+    <div class="panel-body">
+        @Model.User.Address <br />
+        @Model.User.Zipcode @Model.User.City <br /><br />
+        Schoorsteen: @Html.DisplayFor(m => m.User.ChimneySize)
+    </div>
+    
+</div>
+    
 <ul class="list-group">
     @foreach (var item in Model.Items)
     {

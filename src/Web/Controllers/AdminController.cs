@@ -46,5 +46,12 @@ namespace Wishes.Web.Controllers
 
             return View(model);
         }
+
+        [Route("cadeautjes")]
+        public ActionResult ProductCount()
+        {
+            var dict = _wishListRepository.GetProductCount();
+            return View(dict);
+        }
     }
 }

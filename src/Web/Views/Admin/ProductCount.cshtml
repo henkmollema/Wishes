@@ -1,0 +1,16 @@
+﻿@model Dictionary<string, int>
+@{
+    ViewBag.Title = "Cadeautjes";
+}
+
+<h2>Cadeautjes</h2>
+
+<ul class="list-group">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item">
+            <span class="badge">@item.Value</span>
+            @item.Key
+        </li>
+    }
+</ul>
