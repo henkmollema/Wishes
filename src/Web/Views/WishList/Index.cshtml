@@ -6,8 +6,7 @@
 
 <h2>Verlanglijstje van @Model.User.Name</h2>
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-inline", role = "form" }))
-{
+<form role="form" class="form-inline" id="form-add-item">
     <div class="form-group">
         <div class="input-group">
             @Html.LabelFor(m => m.Item.ProductName, new { @class = "sr-only" })
@@ -15,25 +14,62 @@
             <i class="glyphicon glyphicon-gift form-control-feedback"></i>
         </div>
     </div>
-    
+
     <button type="submit" class="btn btn-lg btn-primary">Toevoegen</button>
-}
+</form>
 
 <hr />
 
-@if (Model.Items.Any())
+<div style="max-width: 400px">
+    <ul class="list-group" id="wish-list">
+        @foreach (var item in Model.Items)
+        {
+            <li class="list-group-item" data-item-id="@item.Id">
+                @item.ProductName
+                <a href="#" style="padding: 3px 2px;" class="item-remove pull-right"><i class="glyphicon glyphicon-remove"></i></a>
+                <a href="#" style="padding: 3px 2px;" class="item-down pull-right"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                <a href="#" style="padding: 3px 2px;" class="item-up pull-right"><i class="glyphicon glyphicon-chevron-up"></i></a>
+            </li>
+        }
+    </ul>
+</div>
+
+@section scripts
 {
-    <div style="max-width: 400px">
-        <ul class="list-group">
-            @foreach (var item in Model.Items)
-            {
-                <li class="list-group-item">
-                    @item.ProductName
-                    <a href="#" style="padding: 3px 2px;" class="pull-right"><i class="glyphicon glyphicon-remove"></i></a>
-                    <a href="#" style="padding: 3px 2px;" class="pull-right"><i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <a href="#" style="padding: 3px 2px;" class="pull-right"><i class="glyphicon glyphicon-chevron-up"></i></a>
-                </li>
-            }
-        </ul>
-    </div>
+    <script type="text/javascript">
+        $('#form-add-item').submit(function() {
+            $.post(
+                '@Url.Action("AddItem", "WishList")',
+                $(this).serialize(),
+                function(result) {
+                    if (result.success) {
+                        $('#wish-list').append(
+                            '<li class="list-group-item" data-item-id="' + result.id + '">' +
+                            result.item +
+                            '<a href="#" style="padding: 3px 2px;" class="item-remove pull-right"><i class="glyphicon glyphicon-remove"></i></a>' +
+                            '<a href="#" style="padding: 3px 2px;" class="item-down pull-right"><i class="glyphicon glyphicon-chevron-down"></i></a>' +
+                            '<a href="#" style="padding: 3px 2px;" class="item-up pull-right"><i class="glyphicon glyphicon-chevron-up"></i></a>' +
+                            '</li>');
+                    }
+                }
+            );
+
+            console.log(JSON.stringify($(this).serialize()));
+            return false;
+        });
+
+        $('.item-remove').click(function () {
+            var item = $(this).closest('li');
+            $.post(
+                '@Url.Action("RemoveItem", "WishList")',
+                {
+                    id: item.data('item-id')
+                },
+                function(result) {
+                    if (result.success) {
+                        item.remove();
+                    }
+                });
+        });
+    </script>
 }

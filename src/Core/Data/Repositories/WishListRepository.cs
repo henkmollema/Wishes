@@ -7,7 +7,15 @@ namespace Wishes.Core.Data.Repositories
 {
     public class WishListRepository
     {
-        public IEnumerable<WishListItem> Get(int userId)
+        public WishListItem Get(int id)
+        {
+            using (var con = Database.GetOpenConnection())
+            {
+                return con.Get<WishListItem>(id);
+            }
+        }
+
+        public IEnumerable<WishListItem> GetByUser(int userId)
         {
             using (var con = Database.GetOpenConnection())
             {
@@ -20,6 +28,14 @@ namespace Wishes.Core.Data.Repositories
             using (var con = Database.GetOpenConnection())
             {
                 return con.Insert(item);
+            }
+        }
+
+        public void Remove(WishListItem item)
+        {
+            using (var con = Database.GetOpenConnection())
+            {
+                con.Delete(item);
             }
         }
     }
