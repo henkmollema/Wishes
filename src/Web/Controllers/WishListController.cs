@@ -16,7 +16,7 @@ namespace Wishes.Web.Controllers
         [Route("verlanglijstje")]
         public ActionResult Index()
         {
-            var user = _userRepository.Get(User.Identity.Name);
+            var user = _userRepository.GetByName(User.Identity.Name);
             var model = PopulateModel(user);
 
             return View(model);
@@ -95,7 +95,7 @@ namespace Wishes.Web.Controllers
         {
             get
             {
-                return _userRepository.Get(User.Identity.Name);
+                return _userRepository.GetByName(User.Identity.Name);
             }
         }
 

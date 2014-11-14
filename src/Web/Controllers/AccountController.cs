@@ -54,7 +54,15 @@ namespace Wishes.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _userRepository.Get(model.Username);
+                if (model.Username == WishesSettings.AdminUsername &&
+                    model.Password == WishesSettings.AdminPassword)
+                {
+                    // Special admin login is used.
+                    FormsAuthentication.SetAuthCookie(WishesSettings.AdminUsername, true);
+                    return RedirectToAction("Index", "Admin");
+                }
+
+                var user = _userRepository.GetByName(model.Username);
                 if (user != null)
                 {
                     if (Crypto.VerifyHashedPassword(user.Password, model.Password))

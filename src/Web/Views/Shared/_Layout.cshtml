@@ -26,19 +26,15 @@
                         {
                             if (User.Identity.Name == WishesSettings.AdminUsername)
                             {
-                                <li>@Html.ActionLink("Verlanglijstjes", "All", "WishList")</li>
+                                <li>@Html.ActionLink("Verlanglijstjes", "Index", "Admin")</li>
                             }
                             else
                             {
                                 <li>@Html.ActionLink("Verlanglijstje", "Index", "WishList")</li>
                             }
                         }
-                        else
-                        {
-                            <li>@Html.ActionLink("Inloggen", "Login", "Account")</li>
-                            <li>@Html.ActionLink("Registeren", "Register", "Account")</li>
-                        }
                     </ul>
+                    @Html.Partial("_LoginPartial")
                 </div>
             </div>
         </div>

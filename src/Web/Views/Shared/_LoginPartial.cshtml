@@ -1,0 +1,19 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Uitloggen", "Logout", "Account")
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Inloggen", "Login", "Account")
+        </li>
+        <li>
+            @Html.ActionLink("Registreren", "Register", "Account")
+        </li>
+    </ul>
+}

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Dapper;
 using Dommel;
 using Wishes.Core.Domain.Model;
@@ -7,7 +8,23 @@ namespace Wishes.Core.Data.Repositories
 {
     public class UserRepository
     {
-        public User Get(string username)
+        public IEnumerable<User> GetAll()
+        {
+            using (var con = Database.GetOpenConnection())
+            {
+                return con.GetAll<User>();
+            }
+        }
+
+        public User Get(int id)
+        {
+            using (var con = Database.GetOpenConnection())
+            {
+                return con.Get<User>(id);
+            }
+        }
+
+        public User GetByName(string username)
         {
             using (var con = Database.GetOpenConnection())
             {

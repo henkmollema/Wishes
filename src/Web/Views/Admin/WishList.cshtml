@@ -1,0 +1,15 @@
+﻿@model Wishes.Web.Models.WishList.WishListModel
+
+@{
+    ViewBag.Title = "Verlanglijstje van " + Model.User.Name;
+}
+
+<h2>Verlanglijstje van @Model.User.Name</h2>
+
+<ul class="list-group">
+    @foreach (var item in Model.Items)
+    {
+        <li class="list-group-item">@item.ProductName</li>
+    }
+</ul>
+        

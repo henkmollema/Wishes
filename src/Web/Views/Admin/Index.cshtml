@@ -1,0 +1,14 @@
+﻿@model Wishes.Web.Models.Admin.OverviewModel
+
+@{
+    ViewBag.Title = "Verlanglijstjes";
+}
+
+<h2>Verlanglijstjes</h2>
+
+<div class="list-group">
+    @foreach (var user in Model.Users)
+    {
+        <a href="@Url.Action("WishList", "Admin", new { id = user.Id })" class="list-group-item">@user.Name</a>
+    }
+</div>
