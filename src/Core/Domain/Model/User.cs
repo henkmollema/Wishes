@@ -16,6 +16,6 @@
 
         public string City { get; set; }
 
-        public int ChimneySize { get; set; }
+        public ChimneySize ChimneySize { get; set; }
     }
 }

@@ -22,5 +22,13 @@ namespace Wishes.Core.Data.Repositories
                 return con.Insert(user);
             }
         }
+
+        public void Update(User user)
+        {
+            using (var con = Database.GetOpenConnection())
+            {
+                con.Update(user);
+            }
+        }
     }
 }

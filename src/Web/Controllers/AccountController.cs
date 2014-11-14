@@ -32,7 +32,7 @@ namespace Wishes.Web.Controllers
                                                Address = model.Address,
                                                Zipcode = model.Zipcode,
                                                City = model.City,
-                                               ChimneySize = (int)ChimneySize.Medium
+                                               ChimneySize = ChimneySize.Medium
                                            });
 
                 FormsAuthentication.SetAuthCookie(model.Username, true);

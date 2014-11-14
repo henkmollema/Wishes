@@ -81,6 +81,16 @@ namespace Wishes.Web.Controllers
             return Json(new { success = true });
         }
 
+        [HttpPost]
+        public JsonResult ChangeChimneySize(ChimneySize size)
+        {
+            var user = CurrentUser;
+            user.ChimneySize = size;
+            _userRepository.Update(user);
+
+            return Json(new { success = true });
+        }
+
         private User CurrentUser
         {
             get
