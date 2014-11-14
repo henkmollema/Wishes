@@ -48,11 +48,11 @@
 {
     <script type="text/javascript">
         $(function() {
-            $('#form-add-item').submit(function () {
+            $('#form-add-item').submit(function() {
                 $.post(
                     '@Url.Action("AddItem", "WishList")',
                     $(this).serialize(),
-                    function (result) {
+                    function(result) {
                         if (result.success) {
                             $('#wish-list').append(
                                 '<li class="list-group-item" data-item-id="' + result.id + '">' +
@@ -64,59 +64,65 @@
                         }
                     }
                 );
-
-                console.log(JSON.stringify($(this).serialize()));
                 return false;
             });
 
-            $('#wish-list').on('click', '.item-remove', function () {
+            $('#wish-list').on('click', '.item-remove', function() {
                 var item = $(this).closest('li');
                 $.post(
                     '@Url.Action("RemoveItem", "WishList")',
                     {
                         id: item.data('item-id')
                     },
-                    function (result) {
+                    function(result) {
                         if (result.success) {
                             item.remove();
                         }
                     });
             });
 
-            $('#wish-list').on('click', '.item-up', function () {
+            $('#wish-list').on('click', '.item-up', function() {
                 var $this = $(this);
                 var $item = $this.closest('li');
+                var $prev = $item.prev();
+
+                // Switch the current and previous items in the list.
+                $item.insertBefore($prev);
+
                 $.post(
                     '@Url.Action("MoveItem", "WishList")',
                     {
-                        id: $item.data('item-id'),
-                        up: true
+                        id1: $item.data('item-id'),
+                        order1: $item.index(),
+                        id2: $prev.data('item-id'),
+                        order2: $prev.index()
                     },
-                    function (result) {
-                        if (result.success) {
-                            var $prev = $item.prev();
-                            if ($prev != null) {
-                                $item.insertBefore($prev);
-                            }
+                    function(result) {
+                        if (!result || !result.success) {
+                            alert('Er iets mis gegaan. Probeer het opnieuw.');
                         }
                     });
             });
 
-            $('#wish-list').on('click', '.item-down', function () {
+            $('#wish-list').on('click', '.item-down', function() {
                 var $this = $(this);
                 var $item = $this.closest('li');
+                var $next = $item.next();
+
+                // Switch the current and next item in the list.
+                $item.insertAfter($next);
+
                 $.post(
                     '@Url.Action("MoveItem", "WishList")',
                     {
-                        id: $item.data('item-id'),
-                        up: false
+                        id1: $item.data('item-id'),
+                        order1: $item.index(),
+                        id2: $next.data('item-id'),
+                        order2: $next.index()
                     },
-                    function (result) {
-                        if (result.success) {
-                            var $prev = $item.next();
-                            if ($prev != null) {
-                                $item.insertAfter($prev);
-                            }
+                    function(result) {
+                        if (!result || !result.success) {
+                            alert('Er iets mis gegaan. Probeer het opnieuw.');
                         }
                     });
             });

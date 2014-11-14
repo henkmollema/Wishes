@@ -31,7 +31,7 @@ namespace Wishes.Web.Controllers
                                                     {
                                                         ProductName = model.Item.ProductName,
                                                         UserId = user.Id,
-                                                        SortOrder = 0
+                                                        SortOrder = 9999
                                                     });
 
             return Json(new { success = true, id, item = model.Item.ProductName });
@@ -57,8 +57,27 @@ namespace Wishes.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult MoveItem(int id, bool up)
+        public JsonResult MoveItem(int id1, int order1, int id2, int order2)
         {
+            var item1 = _wishListRepository.Get(id1);
+            var item2 = _wishListRepository.Get(id2);
+            if (item1 == null || item2 == null)
+            {
+                return Json(new { success = false });
+            }
+
+            var user = CurrentUser;
+            if (item1.UserId != user.Id || item2.UserId != user.Id)
+            {
+                return Json(new { success = false });
+            }
+
+            item1.SortOrder = order1;
+            item2.SortOrder = order2;
+
+            _wishListRepository.Update(item1);
+            _wishListRepository.Update(item2);
+
             return Json(new { success = true });
         }
 

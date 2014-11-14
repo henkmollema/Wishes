@@ -19,7 +19,7 @@ namespace Wishes.Core.Data.Repositories
         {
             using (var con = Database.GetOpenConnection())
             {
-                return con.Query<WishListItem>("select * from WishListItems where UserId = @UserId", new { UserId = userId });
+                return con.Query<WishListItem>("select * from WishListItems where UserId = @UserId order by SortOrder", new { UserId = userId });
             }
         }
 
@@ -28,6 +28,14 @@ namespace Wishes.Core.Data.Repositories
             using (var con = Database.GetOpenConnection())
             {
                 return con.Insert(item);
+            }
+        }
+
+        public void Update(WishListItem item)
+        {
+            using (var con = Database.GetOpenConnection())
+            {
+                con.Update(item);
             }
         }
 
