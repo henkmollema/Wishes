@@ -61,5 +61,14 @@ namespace Wishes.Web.Controllers
             var dict = _wishListRepository.GetProductCount();
             return View(dict);
         }
+        
+        [HttpPost]
+        public JsonResult ChangeShouldOrder(int itemId)
+        {
+            var item = _wishListRepository.Get(itemId);
+            item.ShouldOrder = !item.ShouldOrder;
+            _wishListRepository.Update(item);
+            return Json(new { success = true });
+        }
     }
 }

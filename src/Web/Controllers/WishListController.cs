@@ -31,7 +31,8 @@ namespace Wishes.Web.Controllers
                                                     {
                                                         ProductName = model.Item.ProductName,
                                                         UserId = user.Id,
-                                                        SortOrder = 9999
+                                                        SortOrder = 9999,
+                                                        ShouldOrder = true
                                                     });
 
             return Json(new { success = true, id, item = model.Item.ProductName });

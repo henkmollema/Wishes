@@ -30,6 +30,7 @@ namespace Wishes.Core.Data.Repositories
             {
                 string sql = @"
 select ProductName, count(*) as c from WishListItems
+where ShouldOrder = 1
 group by ProductName
 order by c desc";
                 var res = con.Query<dynamic>(sql);

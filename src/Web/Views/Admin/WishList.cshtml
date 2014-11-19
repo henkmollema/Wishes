@@ -18,10 +18,41 @@
 <ul class="list-group">
     @foreach (var item in Model.Items)
     {
-        <li class="list-group-item">@item.ProductName</li>
+        <li class="list-group-item" data-item-id="@item.Id">
+            @item.ProductName
+            
+            <div class="checkbox pull-right" style="margin-top: 0">
+                <label>
+                    <input type="checkbox" class="item-should-order" value="@item.ShouldOrder.ToString().ToLower()" checked="@item.ShouldOrder" />
+                    Bestellen
+                </label>
+            </div>
+        </li>
     }
 </ul>
         
 <form role="form" id="form-delete" action="" method="post">
     <button type="submit" class="btn btn-danger">Verlanglijstje verwijderen</button>
 </form>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function() {
+            $('.item-should-order').change(function () {
+                var $this = $(this);
+                var itemId = $this.closest('li').data('item-id');
+
+                $.post(
+                    '@Url.Action("ChangeShouldOrder", "Admin")',
+                    {
+                        itemId: itemId
+                    },
+                    function(result) {
+                        if (!result.success) {
+                            alert('Er is iets mis gegaan.');
+                        }
+                    });
+            });
+        });
+    </script>
+}

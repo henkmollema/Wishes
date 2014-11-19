@@ -51,7 +51,7 @@
     <Compile Include="Data\Repositories\WishListRepository.cs" />
     <Compile Include="Domain\Model\ChimneySize.cs" />
     <Compile Include="Domain\Model\User.cs" />
-    <Compile Include="Domain\Model\WishlistItem.cs" />
+    <Compile Include="Domain\Model\WishListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
